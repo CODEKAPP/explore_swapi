@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWAPI Explorer</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Agrega el enlace a los estilos CSS -->
+</head>
+
+<body>
+    <header>
+        <h1>SWAPI Explorer</h1>
+        <label for="entityTypeSelect">Selecciona una entidad:</label>
+        <select id="entityTypeSelect">
+            <option value="people">Persona</option>
+            <option value="planets">Planeta</option>
+            <option value="films">Película</option>
+            <option value="species">Especie</option> <!-- Agregar opción para especies -->
+            <option value="vehicles">Vehículo</option> <!-- Agregar opción para vehículos -->
+            <option value="starships">Nave espacial</option>
+            <!-- Agregar opciones para otros tipos de entidades (especies, naves, vehículos, etc.) -->
+        </select>
+
+        <!-- Campo de búsqueda y botón -->
+    <label for="searchTerm">Buscar:</label>
+    <input type="text" id="searchTerm" />
+    <button id="searchButton">Buscar</button>
+    
+        <div id="loader" class="loader"></div>
+    </header>
+    <main>
+        <nav id="nav">
+            <!-- Aquí se mostrarán los listados de entidades -->
+        </nav>
+        <section id="detailView">
+            <!-- Aquí se mostrarán los detalles de la entidad seleccionada -->
+        </section>
+        <!-- <section id="additionalInfoView"> -->
+            <!-- Aquí se mostrará la información adicional -->
+        <!-- </section> -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <section id="modalContent">
+                <!-- Aquí se mostrará la información adicional -->
+            </section>
+        </div>
+    </div>
+
+
+    </main>
+    <script src="app.js"></script>
+</body>
+
+</html>
