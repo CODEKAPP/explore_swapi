@@ -75,7 +75,6 @@ async function fetchData(url) {
   }
 }
 
-
 // Función para cargar y mostrar listados de entidades con paginación
 async function displayEntities(entityType, page = 1) {
   const entities = await fetchData(`${baseUrl}${entityType}/?page=${page}`);
