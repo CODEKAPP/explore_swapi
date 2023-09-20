@@ -143,7 +143,7 @@ table th {
 /* Estilos para el mensaje de "No se encontraron resultados" */
 
 nav:empty::before {
-  content: "No se encontraron resultados.";
+  content: "No results found.";
   display: block;
   text-align: center;
   margin-top: 20px;
