@@ -43,25 +43,38 @@ function hideLoader() {
 }
 
 // Función para realizar solicitudes a la API y manejar errores
+// Función para simular retrasos y errores aleatorios en las solicitudes a la API
 async function fetchData(url) {
   try {
     showLoader(); // Muestra el loader
+
+    // Simular un retraso aleatorio de hasta 2 segundos
+    const randomDelay = Math.random() * 2000;
+    await new Promise((resolve) => setTimeout(resolve, randomDelay));
+
+    // Simular un error aleatorio (1 de cada 20 solicitudes)
+    const randomError = Math.random() < 0.05; // 5% de probabilidad de error
+    if (randomError) {
+      throw new Error("Simulated error occurred.");
+    }
+
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
-        `Error en la solicitud: ${response.status} ${response.statusText}`
+        `Request error: ${response.status} ${response.statusText}`
       );
     }
     hideLoader(); // Oculta el loader cuando la solicitud ha terminado con éxito
 
     return await response.json();
   } catch (error) {
-    console.error("Error al cargar datos:", error);
+    console.error("Error loading data:", error);
     hideLoader(); // Oculta el loader en caso de error
 
     return null;
   }
 }
+
 
 // Función para cargar y mostrar listados de entidades con paginación
 async function displayEntities(entityType, page = 1) {
@@ -89,7 +102,7 @@ async function displayEntities(entityType, page = 1) {
     pagination.className = "pagination";
     if (entities.previous) {
       const prevButton = document.createElement("button");
-      prevButton.textContent = "Anterior";
+      prevButton.textContent = "PREV";
       prevButton.addEventListener("click", () =>
         displayEntities(entityType, page - 1)
       );
@@ -97,15 +110,35 @@ async function displayEntities(entityType, page = 1) {
     }
     if (entities.next) {
       const nextButton = document.createElement("button");
-      nextButton.textContent = "Siguiente";
+      nextButton.textContent = "NEXT";
       nextButton.addEventListener("click", () =>
         displayEntities(entityType, page + 1)
       );
       pagination.appendChild(nextButton);
     }
     nav.appendChild(pagination);
+
+    // Mostrar información de paginación
+    if (entities.previous || entities.next) {
+      const pageInfo = document.createElement("p");
+      // pageInfo.textContent = `Página ${page} de ${Math.ceil(
+      //   entities.count / entities.results.length
+      // )}`;
+      pageInfo.textContent = `Page ${page} of ${Math.ceil(
+        entities.count / 10
+      )}`;
+
+      pagination.appendChild(pageInfo);
+    }
+
+    nav.appendChild(pagination);
+
+    // Ocultar el botón "NEXT" si estamos en la última página
+    // if (!entities.next) {
+    //   nextButton.style.display = "none";
+    // }
   } else {
-    nav.textContent = "No se encontraron resultados.";
+    nav.textContent = "No results found.";
   }
 }
 
@@ -133,7 +166,7 @@ async function displayEntityDetail(entityType, index) {
           // Si hay URLs válidas en el arreglo, crear botones "Ver más" para cada una
           urls.forEach((url, index) => {
             const viewMoreButton = document.createElement("button");
-            viewMoreButton.textContent = "Ver más";
+            viewMoreButton.textContent = "More";
             viewMoreButton.addEventListener("click", () =>
               displayAdditionalInfo(url, index)
             );
@@ -150,7 +183,7 @@ async function displayEntityDetail(entityType, index) {
       } else if (typeof value === "string" && value.startsWith("https")) {
         // Si el valor es una única URL que comienza con "https", mostrar un botón "Ver más"
         const viewMoreButton = document.createElement("button");
-        viewMoreButton.textContent = "Ver más";
+        viewMoreButton.textContent = "More";
         viewMoreButton.addEventListener("click", () =>
           displayAdditionalInfo(value)
         );
@@ -173,7 +206,7 @@ async function displayAdditionalInfo(url, index = null) {
     const response = await fetch(url);
     if (!response.ok) {
       throw new Error(
-        `Error en la solicitud: ${response.status} ${response.statusText}`
+        `Request error: ${response.status} ${response.statusText}`
       );
     }
     const data = await response.json();
@@ -194,10 +227,10 @@ async function displayAdditionalInfo(url, index = null) {
           const urls = value.filter((url) => url.startsWith("https"));
 
           if (urls.length > 0) {
-            // Si hay URLs válidas en el arreglo, crear botones "Ver más" para cada una
+            // Si hay URLs válidas en el arreglo, crear botones "More" para cada una
             urls.forEach((url, index) => {
               const viewMoreButton = document.createElement("button");
-              viewMoreButton.textContent = "Ver más";
+              viewMoreButton.textContent = "More";
               viewMoreButton.addEventListener("click", () =>
                 displayAdditionalInfo(url, index)
               );
@@ -214,7 +247,7 @@ async function displayAdditionalInfo(url, index = null) {
         } else if (typeof value === "string" && value.startsWith("https")) {
           // Si el valor es una única URL que comienza con "https", mostrar un botón "Ver más"
           const viewMoreButton = document.createElement("button");
-          viewMoreButton.textContent = "Ver más";
+          viewMoreButton.textContent = "More";
           viewMoreButton.addEventListener("click", () =>
             displayAdditionalInfo(value)
           );
@@ -247,7 +280,7 @@ async function displayAdditionalInfo(url, index = null) {
       }
     };
   } catch (error) {
-    console.error("Error al cargar datos adicionales:", error);
+    console.error("Error loading additional data:", error);
   }
 }
 
@@ -294,7 +327,7 @@ async function searchEntities(entityType, searchTerm) {
     }
     nav.appendChild(pagination);
   } else {
-    nav.textContent = "No se encontraron resultados.";
+    nav.textContent = "No results found.";
   }
 }
 

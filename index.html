@@ -4,32 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SWAPI Explorer</title>
+    <title>SWAPI</title>
     <link rel="stylesheet" href="./src/styles.css"> <!-- Agrega el enlace a los estilos CSS -->
 </head>
 
 <body>
     <header>
         <h1>SWAPI Explorer</h1>
-        <label for="entityTypeSelect">Selecciona una entidad:</label>
+        <label for="entityTypeSelect">Select an entity:</label>
         <select id="entityTypeSelect">
-            <option value="people">Persona</option>
-            <option value="planets">Planeta</option>
-            <option value="films">Película</option>
-            <option value="species">Especie</option> <!-- Agregar opción para especies -->
-            <option value="vehicles">Vehículo</option> <!-- Agregar opción para vehículos -->
-            <option value="starships">Nave espacial</option>
+            <option value="people">People</option>
+            <option value="planets">Planets</option>
+            <option value="films">Films</option>
+            <option value="species">Species</option> <!-- Agregar opción para especies -->
+            <option value="vehicles">Vehicles</option> <!-- Agregar opción para vehículos -->
+            <option value="starships">Starships</option>
             <!-- Agregar opciones para otros tipos de entidades (especies, naves, vehículos, etc.) -->
         </select>
 
         <!-- Campo de búsqueda y botón -->
-    <label for="searchTerm">Buscar:</label>
+    <label for="searchTerm">Search:</label>
     <input type="text" id="searchTerm" />
-    <button id="searchButton">Buscar</button>
-    
+    <button id="searchButton">Search</button>
+    <div class="loaderPosition">
         <div id="loader" class="loader"></div>
-    </header>
-    <main>
+
+    </div>
+</header>
+<main>
         <nav id="nav">
             <!-- Aquí se mostrarán los listados de entidades -->
         </nav>
